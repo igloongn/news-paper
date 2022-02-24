@@ -101,33 +101,26 @@
 							</div>
 						</div>
 
-						<div class="post-control">
-							<div class="prev-post-control">
-								<a class="prev-post" href="#"><span class="lnr lnr-chevron-left"></span></a>
-								<h3><a href="#">appling codon paling Fauc ibus in hoeng</a></h3>
-							</div>
-							<div class="next-post-control">
-								<a class="next-post" href="#"><span class="lnr lnr-chevron-right"></span></a>
-								<h3><a href="#">Neglected Agreeable Of Discovery Concluded</a></h3>
-							</div>
-						</div>
-						<!-- End Post Control -->
 						<div class="single-comment-list">
-							<h2>3 Comment</h2>
+							<h2>{{comments_count}} Comments</h2>
 							<ol>
 								<li>
-									<div class="single-comment-box">
-										<div class="single-comment-thumb">
-											<a href="#"><img alt="" src="images/single/avar1.png"></a>
+									
+									{% for comment in comments %}
+										<div class="single-comment-box">
+											<div class="single-comment-thumb">
+												<a href="#"><img alt="" src="{% static 'images/single/avar1.png' %}"></a>
+											</div>
+											<div class="single-comment-info">
+												<h3><a href="#">{{comment.name}}</a></h3>
+												<p>{{comment.comment}}</p>
+												<div class="single-comment-date"><span class="lnr lnr-calendar-full"></span>{{comment.updated}}
+												</div>
+											</div>
 										</div>
-										<div class="single-comment-info">
-											<h3><a href="#">RICHARD simole</a></h3>
-											<a class="single-comment-reply" href="#">Reply</a>
-											<p>Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
-											<div class="single-comment-date"><span class="lnr lnr-calendar-full"></span> 12 Dec 2015</div>
-										</div>
-									</div>
-									<ul>
+									{% endfor %}
+										
+									<!-- <ul>
 										<li>
 											<div class="single-comment-box">
 												<div class="single-comment-thumb">
@@ -141,20 +134,7 @@
 												</div>
 											</div>
 										</li>
-									</ul>
-								</li>
-								<li>
-									<div class="single-comment-box">
-										<div class="single-comment-thumb">
-											<a href="#"><img alt="" src="images/single/avar3.png"></a>
-										</div>
-										<div class="single-comment-info">
-											<h3><a href="#">RICHARD simole</a></h3>
-											<a class="single-comment-reply" href="#">Reply</a>
-											<p>Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
-											<div class="single-comment-date"><span class="lnr lnr-calendar-full"></span> 12 Dec 2015</div>
-										</div>
-									</div>
+									</ul> -->
 								</li>
 							</ol>
 						</div>
@@ -178,7 +158,7 @@
 											<button type="submit" class="submit-comment"><span data-hover="Click Here">post comment</span> </button>
 										</div>
 									</div>
-								</forma>
+								</form>
 							</div>
 						</div>
 					</div>

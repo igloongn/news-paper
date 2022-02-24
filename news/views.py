@@ -33,7 +33,6 @@ def home(request):
 
     return render(request, 'home.html', p)
     
-  
 
 def blog_list(request, pk=None):
     p={}
@@ -83,9 +82,16 @@ def single(request, pk=None):
             name=comment_name,
             email=comment_email,
             comment=comment_message,
+            comment_owner_id =pk,
         )
         comments.save()        
 
+    comments=Comment.objects.filter(comment_owner_id=pk)
+    # comments=Comment.objects.raw(f'SELECT * FROM news_comment WHERE comment_owner_id={pk}')
+    comments=comments.order_by("-updated")
+    p['comments']=comments
+    comments_count=comments.count()
+    p['comments_count']=comments_count
 
     return render(request, 'single.html', p)
 

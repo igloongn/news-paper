@@ -106,7 +106,7 @@
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<div class="item-banner-adv item-banner-adv1">
 								<a href="#" class="banner-adv-link">
-									<img src="images/home/adv1.jpg" alt="" />
+									<img src="{% static 'images/home/adv1.jpg' %}" alt="" />
 								</a>
 								<div class="banner-adv-info adv-info1">
 									<h2>luxun bags </h2>
@@ -139,12 +139,12 @@
 							<div class="item">
 								<div class="item-top-post post-item">
 									<div class="post-thumb">
-										<a target="_blank" href="{% url 'single' post.id %}"><img src="{% static 'images/home/post1.jpg' %}" alt="" /></a>
+										<a target="_blank" href="{% url 'single' post.id %}"><img src="{{post.picture.url}}" alt="" /></a>
 										<p class="comment-count"><span class="lnr lnr-bubble"></span> 12 Comments</p>
 									</div>
 									<div class="post-info">
 										<div class="post-format">
-											<a href="#"><span class="lnr lnr-camera-video"></span> Video</a>
+											<a href="#"><span class="lnr lnr-camera-video"></span> Post</a>
 										</div>
 										<h3 class="post-title"><a href="#">{{post.title}}</a></h3>
 										
@@ -157,7 +157,7 @@
 						{% endfor %}
 								
 						</div>
-						<a href="{% url 'blog_list' %}" class="btn-view-all"><span class="view-all-text" data-hover="view all">view all</span></a>
+						<a target="_blank" href="{% url 'blog_list' %}" class="btn-view-all"><span class="view-all-text" data-hover="view all">view all</span></a>
 						<!-- <a href="blog" class="btn-view-all"><span class="view-all-text" data-hover="view all">view all</span></a> -->
 					</div>
 				</div>
@@ -201,105 +201,23 @@
 				<!-- End Trending Slider -->
 
 				<!-- Event Slider -->
-				<div class="gallery-slider box-post-slider">
+				<div class="gallery-slider box-post-slider col-12">
 					<h2 class="title home-title">Gallery</h2>
-					<div class="slider center">
-						<div class="item-gallery-post">
+					<div class="slider center col-12">
+					{% for post in posts %}
+						<div class="item-gallery-post col-6">
 							<div class="post-thumb">
-								<a href="#"><img src="images/home/gallery1.jpg" alt="" /></a>
+								<a href="#"><img src="{{post.picture.url}}" alt="" /></a>
 							</div>
-							<div class="post-info">
+							<!-- <div class="post-info">
 								<div class="post-format">
 									<a href="#"><span class="lnr lnr-camera"></span> World</a>
 								</div>
 								<h3 class="post-title"><a href="#">aucibus mollis inter  paling libero ementum</a></h3>
 								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
-							</div>
+							</div> -->
 						</div>
-						<div class="item-gallery-post">
-							<div class="post-thumb">
-								<a href="#"><img src="images/home/gallery2.jpg" alt="" /></a>
-							</div>
-							<div class="post-info">
-								<div class="post-format">
-									<a href="#"><span class="lnr lnr-camera"></span> Australia</a>
-								</div>
-								<h3 class="post-title"><a href="#">ng Faucibusinter appling codon pali </a></h3>
-								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
-							</div>
-						</div>
-						<div class="item-gallery-post">
-							<div class="post-thumb">
-								<a href="#"><img src="images/home/gallery3.jpg" alt="" /></a>
-							</div>
-							<div class="post-info">
-								<div class="post-format">
-									<a href="#"><span class="lnr lnr-camera"></span> Euro</a>
-								</div>
-								<h3 class="post-title"><a href="#">mollis inter appling co doningin</a></h3>
-								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
-							</div>
-						</div>
-						<div class="item-gallery-post">
-							<div class="post-thumb">
-								<a href="#"><img src="images/home/gallery4.jpg" alt="" /></a>
-							</div>
-							<div class="post-info">
-								<div class="post-format">
-									<a href="#"><span class="lnr lnr-camera"></span> Italia</a>
-								</div>
-								<h3 class="post-title"><a href="#">inter appling codon pali ng Faucibus</a></h3>
-								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
-							</div>
-						</div>
-						<div class="item-gallery-post">
-							<div class="post-thumb">
-								<a href="#"><img src="images/home/gallery5.jpg" alt="" /></a>
-							</div>
-							<div class="post-info">
-								<div class="post-format">
-									<a href="#"><span class="lnr lnr-camera"></span> Japan</a>
-								</div>
-								<h3 class="post-title"><a href="#">hendrerit mauris pari Aenean nonummy  </a></h3>
-								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
-							</div>
-						</div>
-						<div class="item-gallery-post">
-							<div class="post-thumb">
-								<a href="#"><img src="images/home/gallery1.jpg" alt="" /></a>
-							</div>
-							<div class="post-info">
-								<div class="post-format">
-									<a href="#"><span class="lnr lnr-camera"></span> Brazil</a>
-								</div>
-								<h3 class="post-title"><a href="#">aucibus mollis inter  paling</a></h3>
-								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
-							</div>
-						</div>
-						<div class="item-gallery-post">
-							<div class="post-thumb">
-								<a href="#"><img src="images/home/gallery2.jpg" alt="" /></a>
-							</div>
-							<div class="post-info">
-								<div class="post-format">
-									<a href="#"><span class="lnr lnr-camera"></span> Vietnam</a>
-								</div>
-								<h3 class="post-title"><a href="#">ng Faucibusinter appling codon pali </a></h3>
-								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
-							</div>
-						</div>
-						<div class="item-gallery-post">
-							<div class="post-thumb">
-								<a href="#"><img src="images/home/gallery3.jpg" alt="" /></a>
-							</div>
-							<div class="post-info">
-								<div class="post-format">
-									<a href="#"><span class="lnr lnr-camera"></span> Egypt</a>
-								</div>
-								<h3 class="post-title"><a href="#">mollis inter appling co doningin</a></h3>
-								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
-							</div>
-						</div>
+					{% endfor %}
 					</div>	
 					<a href="#" class="btn-view-all"><span class="view-all-text" data-hover="view all">view all</span></a>
 				</div>
