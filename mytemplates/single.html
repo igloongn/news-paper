@@ -1,0 +1,321 @@
+<!DOCTYPE HTML>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Full Post{% endblock title %}
+{% block body %}
+
+	<div class="wrap">
+		<div class="container">
+			<div id="header">
+				<div class="header">
+					<div class="row">
+						<div class="col-md-4 col-sm-5 col-xs-12">
+							<div class="logo">
+								<a href="{% url 'home' %}"><img src="{% static 'images/home/logo.png' %}" alt="" /></a>
+							</div>
+						</div>
+						<div class="col-md-8 col-sm-7 col-xs-12">
+							<div class="header-info pull-right">
+								<div class="header-info-search">
+
+									<form class="header-search" action="{% url 'search' %}">
+										<input type="text" class="header-input-search" placeholder="Search Here" name='search_word'/>
+										<a href="#" class="header-btn-search btn" ><span class="lnr lnr-magnifier"></span> Search</a>
+									</form>
+
+								</div>
+								<div class="header-info-login">
+									<a href="#" class="header-btn-signin"><span class="lnr lnr-user"></span> Sign In</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<nav class="main-nav ml-3 ">
+					<ul class="main-menu ">
+						<li><a href="{% url 'home' %}">Home</a></li>
+						<li><a href="{% url 'blog_list' %}">Blog List</a></li>
+						{% for cat in category %}
+							<li><a href="{% url 'blog_list' %}">{{cat.name}}</a></li>
+						{% endfor %}
+						<li><a href="{% url 'test' %}">test</a></li>
+					</ul>
+					<div class="mobile-menu">
+						<span class="mobile-menu-text">Menu</span>
+						<a href="#" class="btn-mobile-menu"><span class="lnr lnr-menu"></span></a>
+					</div>
+
+				</nav>
+				<!-- End Main Nav -->
+			</div>
+			<!-- End Header -->
+			<div id="content">
+
+				<div class="main-content content-single-dark3">
+					<div class="leading-post-dark3">
+						<div class="leading-post-info-dark3">
+							<ul class="post-list-info-author list-inline">
+								<li><a href="#"></a>post by: {{post.author}}</a></li>
+								<li>{{post.created}}</li>
+								<li>3 <a href="#">comments</a></li>
+							</ul>
+							<h2 class="title-single">{{post.title}}</h2>
+							<div class="social-post">
+								<a href="#"><span class="lnr lnr-envelope"></span></a>
+								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a href="#"><i class="fa fa-twitter"></i></a>
+							</div>
+						</div>
+						<div class="single-thumb">
+							<img alt="" src="{{post.picture.url}}">
+						</div>
+					</div>
+					<div class="main-content-single">
+						<p>
+							{{post.desc}}
+						</p>
+						<div class="row">
+							<div class="col-md-7 col-sm-7 col-xs-12">
+								<div class="post-tags-dark2">
+									<h2>Post Tags</h2>
+									<ul>
+										
+										{% for tag in post.tags.all %}
+											<li><a href="#">{{tag}}</a></li>
+										{% endfor %}
+											
+									</ul>
+								</div>
+							</div>
+							<div class="col-md-5 col-sm-5 col-xs-12">
+								<div class="share-post-dark2">
+									<h2>Share Post</h2>
+									<div class="share-social-dark2">
+										<a href="#"><i class="fa fa-twitter"></i></a>
+										<a href="#"><i class="fa fa-facebook"></i></a>
+										<a href="#"><i class="fa fa-instagram"></i></a>
+										<a href="#"><i class="fa fa-google-plus"></i></a>
+										<a href="#"><i class="fa fa-vimeo"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="post-control">
+							<div class="prev-post-control">
+								<a class="prev-post" href="#"><span class="lnr lnr-chevron-left"></span></a>
+								<h3><a href="#">appling codon paling Fauc ibus in hoeng</a></h3>
+							</div>
+							<div class="next-post-control">
+								<a class="next-post" href="#"><span class="lnr lnr-chevron-right"></span></a>
+								<h3><a href="#">Neglected Agreeable Of Discovery Concluded</a></h3>
+							</div>
+						</div>
+						<!-- End Post Control -->
+						<div class="single-comment-list">
+							<h2>3 Comment</h2>
+							<ol>
+								<li>
+									<div class="single-comment-box">
+										<div class="single-comment-thumb">
+											<a href="#"><img alt="" src="images/single/avar1.png"></a>
+										</div>
+										<div class="single-comment-info">
+											<h3><a href="#">RICHARD simole</a></h3>
+											<a class="single-comment-reply" href="#">Reply</a>
+											<p>Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
+											<div class="single-comment-date"><span class="lnr lnr-calendar-full"></span> 12 Dec 2015</div>
+										</div>
+									</div>
+									<ul>
+										<li>
+											<div class="single-comment-box">
+												<div class="single-comment-thumb">
+													<a href="#"><img alt="" src="images/single/avar2.png"></a>
+												</div>
+												<div class="single-comment-info">
+													<h3><a href="#">Kate Ana</a></h3>
+													<a class="single-comment-reply" href="#">Reply</a>
+													<p>Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
+													<div class="single-comment-date"><span class="lnr lnr-calendar-full"></span> 12 Dec 2015</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<div class="single-comment-box">
+										<div class="single-comment-thumb">
+											<a href="#"><img alt="" src="images/single/avar3.png"></a>
+										</div>
+										<div class="single-comment-info">
+											<h3><a href="#">RICHARD simole</a></h3>
+											<a class="single-comment-reply" href="#">Reply</a>
+											<p>Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
+											<div class="single-comment-date"><span class="lnr lnr-calendar-full"></span> 12 Dec 2015</div>
+										</div>
+									</div>
+								</li>
+							</ol>
+						</div>
+						<!-- End Comment List -->
+						<div class="post-comment">
+							<h2>LEAVE A COMMENT</h2>
+							<div class="form-comment">
+								<!-- <form  action="" method="POST"> -->
+									<form action="{% url 'single' post.id %}" method="POST">
+										{% csrf_token %}
+
+										<div class="row">
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<input type="text" placeholder="name"  name="name">
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<input type="text" name="email">
+										</div>
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<textarea rows="8" cols="30" name="message">Your comment</textarea>
+											<button type="submit" class="submit-comment"><span data-hover="Click Here">post comment</span> </button>
+										</div>
+									</div>
+								</forma>
+							</div>
+						</div>
+					</div>
+					<!-- End Main Contet Single -->
+				</div>
+				<!-- End Content -->
+				<div class="related-post">
+					<h2 class="title home-title">RELATED POSTS</h2>
+					<div class="home-direct-nav">
+						<div class="wrap-item">
+							<div class="item">
+								<div class="post-item">
+									<div class="post-thumb">
+										<a href="#"><img alt="" src="images/home/explore1.jpg"></a>
+									</div>
+									<div class="post-info">
+										<div class="post-format">
+											<a href="#"><span class="lnr lnr-camera-video"></span>  Video</a>
+										</div>
+										<h3 class="post-title"><a href="#">Faucibus mollis inter  paling</a></h3>
+										<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives</p>
+									</div>
+								</div>
+							</div>
+							<!-- End Item -->
+							<div class="item">
+								<div class="post-item">
+									<div class="post-thumb">
+										<a href="#"><img alt="" src="images/home/explore2.jpg"></a>
+									</div>
+									<div class="post-info">
+										<div class="post-format">
+											<a href="#"><span class="lnr lnr-camera"></span> Gallery</a>
+										</div>
+										<h3 class="post-title"><a href="#">Aenean nonummy hen drerit mauris pari</a></h3>
+										<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives</p>
+									</div>
+								</div>
+							</div>
+							<!-- End Item -->
+							<div class="item">
+								<div class="post-item">
+									<div class="post-thumb">
+										<a href="#"><img alt="" src="images/home/explore3.jpg"></a>
+									</div>
+									<div class="post-info">
+										<div class="post-format">
+											<a href="#">American</a>
+										</div>
+										<h3 class="post-title"><a href="#">mollis inter appling co doningin</a></h3>
+										<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives</p>
+									</div>
+								</div>
+							</div>
+							<!-- End Item -->
+							<div class="item">
+								<div class="post-item">
+									<div class="post-thumb">
+										<a href="#"><img alt="" src="images/home/explore4.jpg"></a>
+									</div>
+									<div class="post-info">
+										<div class="post-format">
+											<a href="#">Myamma</a>
+										</div>
+										<h3 class="post-title"><a href="#">inter appling codon pali ng Faucibus</a></h3>
+										<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives</p>
+									</div>
+								</div>
+							</div>
+							<!-- End Item -->
+							<div class="item">
+								<div class="post-item">
+									<div class="post-thumb">
+										<a href="#"><img alt="" src="images/home/explore6.jpg"></a>
+									</div>
+									<div class="post-info">
+										<div class="post-format">
+											<a href="#"><span class="lnr lnr-camera"></span> Gallery</a>
+										</div>
+										<h3 class="post-title"><a href="#">hendrerit mauris pari Aenean nonummy </a></h3>
+										<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives</p>
+									</div>
+								</div>
+							</div>
+							<!-- End Item -->
+							<div class="item">
+								<div class="post-item">
+									<div class="post-thumb">
+										<a href="#"><img alt="" src="images/home/explore8.jpg"></a>
+									</div>
+									<div class="post-info">
+										<div class="post-format">
+											<a href="#">Europe</a>
+										</div>
+										<h3 class="post-title"><a href="#">ng Faucibusinter appling codon pali </a></h3>
+										<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives</p>
+									</div>
+								</div>
+							</div>
+							<!-- End Item -->
+						</div>
+					</div>
+				</div>
+				<!-- End Related Post -->
+			</div>
+			<!-- End Content -->
+			<div id="footer">
+				<div class="footer-default">
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<div class="logo-footer"><a href="#">new<span>day</span>.com</a></div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<div class="social-footer text-right">
+								<a href="#"><i class="fa fa-twitter"></i></a>
+								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a href="#"><i class="fa fa-pinterest"></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="footer">	
+						<ul class="menu-footer">
+							<li><a href="#">About us </a></li>
+							<li><a href="#">Contact us</a></li>
+							<li><a href="#">Work for us</a></li>
+							<li><a href="#">Help </a></li>
+							<li><a href="#">Transcripts</a></li>
+							<li><a href="#">License Footage</a></li>
+							<li><a href="#">Terms of Use</a></li>
+							<li><a href="#">Privacy Policy </a></li>
+							<li><a href="#">AdChoices</a></li>
+						</ul>
+						<p class="copyright">Copyright © 2016 Wordpress. All Rights Reserved. Designed by <a href="#"><span>7uptheme</span>.com</a>.</p>
+					</div>
+				</div>
+			</div>
+			<!-- End Footer -->
+		</div>
+	</div>
+{% endblock body %}

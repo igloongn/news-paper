@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+{% block body %}
+	<div class="wrap">
+		<div class="container">
+			<div id="header">
+				<div class="header">
+					<div class="row">
+						<div class="col-md-4 col-sm-5 col-xs-12">
+							<div class="logo">
+								<a href="index-2.html"><img src="{% static 'images/home/logo.png' %}" alt="" /></a>
+							</div>
+						</div>
+						<div class="col-md-8 col-sm-7 col-xs-12">
+							<div class="header-info pull-right">
+								<div class="header-info-search">
+
+									<form class="header-search" action="{% url 'search' %}">
+										<!-- <input type="text" class="" placeholder="Search Here" name='search_word'/> -->
+										<div class="input-group">
+											<input type="search" class="form-control rounded" placeholder="Search Here" aria-label="Search" aria-describedby="search-addon"  name='search_word' style="width:60%;" />
+											<button type="submit" class="btn btn-dark"><span class="lnr lnr-magnifier"></span> Search</button>
+										</div>
+									</form>
+								</div>
+								
+								<div class="header-info-login">
+									<a href="#" class="header-btn-signin"><span class="lnr lnr-user"></span> Sign In</a>
+									<!-- <a href="#" class="header-btn-join"><span class="lnr lnr-lock"></span> Join</a> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<nav class="main-nav ml-3 ">
+					<ul class="main-menu ">
+						<li><a href="{% url 'home' %}">Home</a></li>
+						<li><a href="{% url 'blog_list' %}">Blog List</a></li>
+						{% for cat in category %}
+							<li><a href="{% url 'blog_list' %}">{{cat.name}}</a></li>
+						{% endfor %}
+						<li><a href="{% url 'test' %}">test</a></li>
+					</ul>
+					<div class="mobile-menu">
+						<span class="mobile-menu-text">Menu</span>
+						<a href="#" class="btn-mobile-menu"><span class="lnr lnr-menu"></span></a>
+					</div>
+
+				</nav>
+				<!-- End Main Nav -->
+			</div>
+
+			<div id="content">
+				<div class="banner-slider home-paginav">
+					<div class="wrap-item">
+						<div class="item">
+							<div class="thumb-slider">
+								<a href="#" class="link-thumb-slider">
+									<img src="{% static 'images/home/banner1.jpg' %}" alt="" />
+								</a>
+							</div>
+							<div class="info-slider">
+								<h3><span>Middle East</span> <span>Africa</span></h3>
+								<h2>Creative Use</h2>
+								<p>Hasellus pretium laoreet est, interdum natoque penatibus et magnis dis parturient montes</p>
+								<a href="#" class="link-live-view"><span class="lnr lnr-camera-video"></span> Watch a preview</a>
+							</div>
+						</div>
+						<!-- End Item -->
+						<div class="item">
+							<div class="thumb-slider">
+								<a href="#" class="link-thumb-slider">
+									<img src="{% static 'images/home/banner2.jpg' %}" alt="" />
+								</a>
+							</div>
+							<div class="info-slider">
+								<h3><span>Middle East</span> <span>Africa</span></h3>
+								<h2>Creative Use</h2>
+								<p>Hasellus pretium laoreet est, interdum natoque penatibus et magnis dis parturient montes</p>
+								<a href="#" class="link-live-view"><span class="lnr lnr-camera-video"></span> Watch a preview</a>
+							</div>
+						</div>
+						<!-- End Item -->
+						<div class="item">
+							<div class="thumb-slider">
+								<a href="#" class="link-thumb-slider">
+									<img src="{% static 'images/home/banner3.jpg' %}" alt="" />
+								</a>
+							</div>
+							<div class="info-slider">
+								<h3><span>Middle East</span> <span>Africa</span></h3>
+								<h2>Creative Use</h2>
+								<p>Hasellus pretium laoreet est, interdum natoque penatibus et magnis dis parturient montes</p>
+								<a href="#" class="link-live-view"><span class="lnr lnr-camera-video"></span> Watch a preview</a>
+							</div>
+						</div>
+						<!-- End Item -->
+					</div>
+				</div>
+				<!-- End Banner Slider -->
+				<div class="banner-adv">
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="item-banner-adv item-banner-adv1">
+								<a href="#" class="banner-adv-link">
+									<img src="images/home/adv1.jpg" alt="" />
+								</a>
+								<div class="banner-adv-info adv-info1">
+									<h2>luxun bags </h2>
+									<p>on suppeshop on Collection</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="item-banner-adv">
+								<a href="#" class="banner-adv-link">
+									<img src="images/home/adv2.jpg" alt="" />
+								</a>
+								<div class="banner-adv-info adv-info2">
+									<ul class="list-inline">
+										<li><label>big sale</label></li>
+										<li><span>up to </span> <strong>80% off</strong></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End Banner Advert -->
+				<div class="top-post-slider box-post-slider">
+					<h2 class="title home-title">top post</h2>
+					<div class="home-direct-nav">
+						<div class="wrap-item">
+							
+						{% for post in posts %}
+							<div class="item">
+								<div class="item-top-post post-item">
+									<div class="post-thumb">
+										<a target="_blank" href="{% url 'single' post.id %}"><img src="{% static 'images/home/post1.jpg' %}" alt="" /></a>
+										<p class="comment-count"><span class="lnr lnr-bubble"></span> 12 Comments</p>
+									</div>
+									<div class="post-info">
+										<div class="post-format">
+											<a href="#"><span class="lnr lnr-camera-video"></span> Video</a>
+										</div>
+										<h3 class="post-title"><a href="#">{{post.title}}</a></h3>
+										
+										<!-- <a href="#"><span class="lnr lnr-camera-video"></span> Details</a> -->
+										<p class="desc">{{ post.desc|truncatechars:200 }}</p>
+									</div>
+								</div>
+							</div>	
+							<!-- End Item -->
+						{% endfor %}
+								
+						</div>
+						<a href="{% url 'blog_list' %}" class="btn-view-all"><span class="view-all-text" data-hover="view all">view all</span></a>
+						<!-- <a href="blog" class="btn-view-all"><span class="view-all-text" data-hover="view all">view all</span></a> -->
+					</div>
+				</div>
+				<!-- End Top Post Slider -->
+				<div class="trending-slider box-post-slider">
+					<h2 class="title home-title">Trending</h2>
+					<div class="home-direct-nav">
+						<div class="wrap-item">
+							
+							
+							{% for data in res_json_data %}
+						{% if data.image %}
+							<div class="item">
+								<div class="row">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<div class="item-trending-post post-item">
+											<div class="post-thumb">
+												<a href="{{data.url}}"><img height="400" src="{{data.image}}" alt="" /></a>
+											</div>
+											<div class="post-info">
+												<div class="post-format">
+													<a href="#"><span class="lnr lnr-magnifier"></span>  Trending</a>
+												</div>
+												<h3 class="post-title">
+													<a href="#">{{data.title}}</a>
+												</h3>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+								
+							{% endfor %}
+								
+
+						</div>
+						<a href="https://edition.cnn.com/" target="_blank" class="btn-view-all"><span class="view-all-text" data-hover="view all">view all</span> </a>
+					</div>
+				</div>
+				<!-- End Trending Slider -->
+
+				<!-- Event Slider -->
+				<div class="gallery-slider box-post-slider">
+					<h2 class="title home-title">Gallery</h2>
+					<div class="slider center">
+						<div class="item-gallery-post">
+							<div class="post-thumb">
+								<a href="#"><img src="images/home/gallery1.jpg" alt="" /></a>
+							</div>
+							<div class="post-info">
+								<div class="post-format">
+									<a href="#"><span class="lnr lnr-camera"></span> World</a>
+								</div>
+								<h3 class="post-title"><a href="#">aucibus mollis inter  paling libero ementum</a></h3>
+								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
+							</div>
+						</div>
+						<div class="item-gallery-post">
+							<div class="post-thumb">
+								<a href="#"><img src="images/home/gallery2.jpg" alt="" /></a>
+							</div>
+							<div class="post-info">
+								<div class="post-format">
+									<a href="#"><span class="lnr lnr-camera"></span> Australia</a>
+								</div>
+								<h3 class="post-title"><a href="#">ng Faucibusinter appling codon pali </a></h3>
+								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
+							</div>
+						</div>
+						<div class="item-gallery-post">
+							<div class="post-thumb">
+								<a href="#"><img src="images/home/gallery3.jpg" alt="" /></a>
+							</div>
+							<div class="post-info">
+								<div class="post-format">
+									<a href="#"><span class="lnr lnr-camera"></span> Euro</a>
+								</div>
+								<h3 class="post-title"><a href="#">mollis inter appling co doningin</a></h3>
+								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
+							</div>
+						</div>
+						<div class="item-gallery-post">
+							<div class="post-thumb">
+								<a href="#"><img src="images/home/gallery4.jpg" alt="" /></a>
+							</div>
+							<div class="post-info">
+								<div class="post-format">
+									<a href="#"><span class="lnr lnr-camera"></span> Italia</a>
+								</div>
+								<h3 class="post-title"><a href="#">inter appling codon pali ng Faucibus</a></h3>
+								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
+							</div>
+						</div>
+						<div class="item-gallery-post">
+							<div class="post-thumb">
+								<a href="#"><img src="images/home/gallery5.jpg" alt="" /></a>
+							</div>
+							<div class="post-info">
+								<div class="post-format">
+									<a href="#"><span class="lnr lnr-camera"></span> Japan</a>
+								</div>
+								<h3 class="post-title"><a href="#">hendrerit mauris pari Aenean nonummy  </a></h3>
+								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
+							</div>
+						</div>
+						<div class="item-gallery-post">
+							<div class="post-thumb">
+								<a href="#"><img src="images/home/gallery1.jpg" alt="" /></a>
+							</div>
+							<div class="post-info">
+								<div class="post-format">
+									<a href="#"><span class="lnr lnr-camera"></span> Brazil</a>
+								</div>
+								<h3 class="post-title"><a href="#">aucibus mollis inter  paling</a></h3>
+								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
+							</div>
+						</div>
+						<div class="item-gallery-post">
+							<div class="post-thumb">
+								<a href="#"><img src="images/home/gallery2.jpg" alt="" /></a>
+							</div>
+							<div class="post-info">
+								<div class="post-format">
+									<a href="#"><span class="lnr lnr-camera"></span> Vietnam</a>
+								</div>
+								<h3 class="post-title"><a href="#">ng Faucibusinter appling codon pali </a></h3>
+								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
+							</div>
+						</div>
+						<div class="item-gallery-post">
+							<div class="post-thumb">
+								<a href="#"><img src="images/home/gallery3.jpg" alt="" /></a>
+							</div>
+							<div class="post-info">
+								<div class="post-format">
+									<a href="#"><span class="lnr lnr-camera"></span> Egypt</a>
+								</div>
+								<h3 class="post-title"><a href="#">mollis inter appling co doningin</a></h3>
+								<p class="desc">Lorem ipsum dolor sit amet, co nsectetur adipiscing elit. Phasellus rutrum, libero id imperdiet ntum, nunc other executives libero id imperdiet ementum</p>
+							</div>
+						</div>
+					</div>	
+					<a href="#" class="btn-view-all"><span class="view-all-text" data-hover="view all">view all</span></a>
+				</div>
+				<!-- End Gallery Slider -->
+
+				
+
+			</div>
+			<!-- End Content -->
+			<div id="footer">
+				<div class="footer-default">
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<div class="logo-footer"><a href="#">new<span>day</span>.com</a></div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<div class="social-footer text-right">
+								<a href="#"><i class="fa fa-twitter"></i></a>
+								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a href="#"><i class="fa fa-pinterest"></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="footer">	
+						<ul class="menu-footer">
+							<li><a href="#">About us </a></li>
+							<li><a href="#">Contact us</a></li>
+							<li><a href="#">Work for us</a></li>
+							<li><a href="#">Help </a></li>
+							<li><a href="#">Transcripts</a></li>
+							<li><a href="#">License Footage</a></li>
+							<li><a href="#">Terms of Use</a></li>
+							<li><a href="#">Privacy Policy </a></li>
+							<li><a href="#">AdChoices</a></li>
+						</ul>
+						<p class="copyright">Copyright © 2016 Wordpress. All Rights Reserved. Designed by <a href="#"><span>7uptheme</span>.com</a>.</p>
+					</div>
+				</div>
+			</div>
+			<!-- End Footer -->
+		</div>
+	</div>
+	
+{% endblock body %}
