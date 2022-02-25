@@ -4,7 +4,7 @@
 {% block title %}
 Login{% endblock title %}
 
-{% block content %}
+{% block body %}
 
 <section class="section-conten padding-y col-12" style="min-height:84vh;">
 
@@ -13,7 +13,7 @@ Login{% endblock title %}
     <div class="container text-center mx-auto alert alert-info" role="alert" style="max-width:500px; margin-top:100px;">
       We have sent you a verification to your email address {{request.GET.email}}
       <br><br>
-      <!-- Already verified? <a href="{% url 'accounts:login' %}">Login</a> -->
+      <!-- Already verified? <a href="{% url 'account:login' %}">Login</a> -->
     </div>
   {% else %}
 
@@ -27,8 +27,8 @@ Login{% endblock title %}
               <div class="card">
                 <div class="card-body">
                   <div class="m-sm-4">  
-                    {% include "include/alert.html" %}
-                    <form action="{% url 'accounts:login' %}" method="POST">
+
+                    <form action="{% url 'account:login' %}" method="POST">
                       <div class="mb-3">
                         {% csrf_token %}
                         <label class="form-label">Email</label>
@@ -38,13 +38,13 @@ Login{% endblock title %}
                         <label class="form-label">Password</label>
                         <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" />
                         <small>
-                          <a href="{% url 'accounts:forgotpassword' %}" class="float-right">Forgot password?</a> 
+                          <a href="{% url 'account:forgotpassword' %}" class="float-right">Forgot password?</a> 
                         </small> 
                       </div>
                       <div class="text-center mt-3">
                         <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
                       </div>
-                      <p class="text-center mt-4">Don't have account? <a href="{% url 'accounts:register' %}">Sign up</a></p>
+                      <p class="text-center mt-4">Don't have account? <a href="{% url 'account:register' %}">Sign up</a></p>
                       <br><br>
                     </form>
                   </div>
@@ -67,6 +67,6 @@ Login{% endblock title %}
 
   {% endif %}
 
-{% endblock content %}
+{% endblock body %}
 
 

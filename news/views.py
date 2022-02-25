@@ -54,10 +54,11 @@ def search(request):
         search_word = request.GET['search_word']
         if search_word:
             posts = Post.objects.order_by('-created').filter(Q(desc__icontains=search_word) | Q(title__icontains=search_word)| Q(author__icontains=search_word) )
-            posts=posts.count()
+            posts_count=posts.count()
 
     return render(request, 'blog.html',  {
                     'posts' : posts,
+                    'posts_count' : posts_count,
                     'category' : category,
                 })
 

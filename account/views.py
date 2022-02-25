@@ -33,6 +33,7 @@ def test(request):
 
 
 def register(request):
+    p={}
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -43,12 +44,13 @@ def register(request):
             password = form.cleaned_data['password']
             username=email.split('@')[0]
             user = form.save(commit=False)
+            # user = Account.objects.create_user(first_name=first_name, last_name=last_name,email=email,username=username, password=password )
             user = Account.objects.create_user(first_name=first_name, last_name=last_name,email=email,username=username, password=password )
             user.phone_number=phone_number
             user.set_password(password)
             user.save()
 
-        # USER EMAIL ACTIVATION
+            # USER EMAIL ACTIVATION
             current_site = get_current_site(request)
             mail_subject = 'Please activate your account'
             message = render_to_string('accounts/email/account_verification.html', {
@@ -60,7 +62,7 @@ def register(request):
             to_email = email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
-        # EMAIL END
+            # EMAIL END
 
             # connect = UserProfile(connect=form.cleaned_data['email'],user=None,profile_picture=None,about_yourself=None) 
             connect = UserProfile(connect=form.cleaned_data['email']) 
@@ -73,63 +75,24 @@ def register(request):
 
     else:
         form = RegistrationForm()
-    params={
-        'form' : form,
-    }
-    return render(request, 'accounts/register.html', params)
+    p['form']=form
+
+    return render(request, 'accounts/register.html', p)
 
 def login_user(request):
     print(request.user.is_authenticated)
     if request.user.is_authenticated:
         print("User is logged in :!)")
-        return redirect('accounts:dashboard')
+        return redirect('home')
     else:
         print("User is not logged in :(")
         if request.method == 'POST':
+            print("We are working on it :(")
             email=request.POST['email']
             password=request.POST['password']
             user = auth.authenticate(email=email, password=password)
 
             if user is not None:
-                # This is to remember the cartItem before logging in
-                try:
-                    cart = Cart.objects.get(cart_id=_cart_id(request))
-                    is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
-                    if is_cart_item_exists:
-                        cart_item = CartItem.objects.filter(cart=cart)
-                        print(is_cart_item_exists)
-
-                        # Getting the product variation by cart id
-                        product_variation = []
-                        for item in cart_item:
-                            variation = item.variations.all()
-                            product_variation.append(list(variation))
-
-                        # Get the cart items from the user to access his product variation
-                        cart_item=CartItem.objects.filter(user=user)
-                        ex_var_list=[]
-                        id=[]
-                        for item in cart_item:
-                            existing_variation = item.variations.all()
-                            ex_var_list.append(list(existing_variation))
-                            id.append(item.id)
-
-                        for pr in product_variation:
-                            if pr in ex_var_list:
-                                index=ex_var_list.index(pr)
-                                item_id=id[index]
-                                item=CartItem.objects.get(id=item_id)
-                                item.quantity += 1
-                                item.user = user
-                                item.save()
-                            else:
-                                cart_item = CartItem.objects.filter(cart=cart)
-                                for item in cart_item:
-                                    item.user= user
-                                    item.save() 
-                except:
-                    pass
-
                 auth.login(request, user)
                 # print(user.username)
                 messages.success(request, 'You are now Logged in ')
@@ -143,20 +106,20 @@ def login_user(request):
                         nextPage = params['next']
                         return redirect(nextPage)
                 except:
-                    return redirect('accounts:dashboard')
+                    return redirect('home')
             else:
                 messages.error(request, 'Invalid Login!!')
-                return redirect('accounts:login')
+                return redirect('account:login')
 
 
     return render(request, 'accounts/login.html')
     
-@login_required(login_url = 'accounts:login')
+@login_required(login_url = 'account:login')
 def logout(request):
     auth.logout(request)
     messages.success(request, 'You are Logged out')
 
-    return redirect('accounts:login')
+    return redirect('account:login')
 
 # EMAIL ACTIVATION
 def activate(request, uidb64, token):
@@ -170,10 +133,10 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         messages.success(request, 'Congratulation! Your account is activated')
-        return redirect('accounts:login')
+        return redirect('account:login')
     else:
         messages.error(request, 'invalid activation link')
-        return redirect('accounts:register')
+        return redirect('account:register')
 
 def forgotpassword(request):
     if request.method == 'POST':
@@ -238,26 +201,26 @@ def resetpassword(request):
         return render(request, 'accounts/email/resetpassword.html')
     
 # DASHBOARD
-@login_required(login_url='accounts:login')
-def dashboard(request):
-    if UserProfile.objects.filter(user=request.user.id).exists():
-        # orders = OrderProduct.objects.order_by('-created_at').filter(user=request.user, ordered=True)
-        orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
-        orders_count = orders.count()
-        userprofile=UserProfile.objects.get(user_id=request.user.id)
-    else:
-        userprofile=None
-        orders_count= 0
+# @login_required(login_url='accounts:login')
+# def dashboard(request):
+#     if UserProfile.objects.filter(user=request.user.id).exists():
+#         # orders = OrderProduct.objects.order_by('-created_at').filter(user=request.user, ordered=True)
+#         orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
+#         orders_count = orders.count()
+#         userprofile=UserProfile.objects.get(user_id=request.user.id)
+#     else:
+#         userprofile=None
+#         orders_count= 0
 
-        orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
+#         orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
 
-        orders_count = orders.count()
-        userprofile=request.user.id
-    params={
-        'orders_count' : orders_count,
-        'userprofile' : userprofile,
-    }
-    return render(request, 'dashboard.html', params)
+#         orders_count = orders.count()
+#         userprofile=request.user.id
+#     params={
+#         'orders_count' : orders_count,
+#         'userprofile' : userprofile,
+#     }
+#     return render(request, 'dashboard.html', params)
 
 @login_required(login_url='accounts:login')
 def my_orders(request):
