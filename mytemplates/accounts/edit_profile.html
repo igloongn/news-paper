@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Edit Profile{% endblock title %}
+
+{% block content %}
+
+<section class="section-conten padding-y bg col-12">
+	<div class="container">
+		<div class="row col-12">
+			{% include 'include/dashboard_sidebar.html' %}
+			<main class="col-md-9">
+				<article class="card">
+				<header class="card-header">
+					<strong class="d-inline-block mr-3">Edit your Profile</strong>
+				</header>
+				<div class="card-body">
+					<div class="text-center mb-4">
+						
+						{% if userprofile.profile_picture %}
+							<img src="{{userprofile.profile_picture.url}}" width="100" style="border-radius: 30%;" alt="Profile_offline_Picture">	
+							{% else %}
+							<img src="https://www.w3schools.com/howto/img_avatar.png" width="100" style="border-radius: 30%;" alt="Profile Picture">	
+						{% endif %}
+							
+					</div>
+					<div class="row"> 
+						<div class="col-md-12">
+						{% include "include/alert.html" %}
+							<form action="{% url 'accounts:edit_profile' %}" method="POST" enctype="multipart/form-data">
+									{% csrf_token %}
+									<div class="form-row">
+										<div class="form-group col-md-6">
+											<label>First Name</label>
+											{{user_form.first_name}}
+										</div>
+										<div class="form-group col-md-6">
+											<label>Last Name</label>
+											{{user_form.last_name}}
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-md-6">
+											<label>Phone Number</label>
+											{{user_form.phone_number}}
+											<!-- <input pattern= '[0-9]{11}' type="tel" class="form-control" name="" value=""> -->
+										</div>
+										<div class="form-group col-md-6">
+											<label>Profile Picture</label>
+											{{profile_form.profile_picture}}
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-md-12">
+											<label>Address</label>
+											{{profile_form.address}}
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col">
+											<label>Tell us about you</label>
+											{{profile_form.about_yourself}}
+										</div>
+									</div>
+									<div class="form-group d-flex justify-content-center">
+										<button type="submit" class="btn btn-success btn-lg">Save</button>
+									</div>
+								</form>
+						</div>
+					</div> 
+				</div> 
+				</article> 
+			</main>
+		</div> 
+	</div>
+
+
+</section>
+
+{% endblock content %}
+
+
+
+

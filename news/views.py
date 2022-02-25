@@ -40,10 +40,7 @@ def blog_list(request, pk=None):
     p['posts']=posts
     if posts.count() == 0:
         p['msg']="Sorry this list is empty"
-    # Category
-    # category=Category.objects.all()
-    category=Category.objects.raw("SELECT * FROM news_category")
-    p['category']=category
+
     # Search
     # search=Post.objects.filter(title__icontains = "user")
 
@@ -57,7 +54,7 @@ def search(request):
         search_word = request.GET['search_word']
         if search_word:
             posts = Post.objects.order_by('-created').filter(Q(desc__icontains=search_word) | Q(title__icontains=search_word)| Q(author__icontains=search_word) )
-            product_count=posts.count()
+            posts=posts.count()
 
     return render(request, 'blog.html',  {
                     'posts' : posts,
@@ -72,6 +69,9 @@ def single(request, pk=None):
     p['category']=category
     post=get_object_or_404(Post, id=pk)
     p['post']=post
+    comment=Comment.objects.filter(id=pk)
+    comment_count=comment.count()
+    p['comment_count']=comment_count
    
     # comments
     if request.method == 'POST':

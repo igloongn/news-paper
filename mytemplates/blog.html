@@ -4,64 +4,22 @@
 {% block title %}Blogs{% endblock title %}
 
 {% block body %}
-	<div class="wrap">
-		<div class="container">
-			<div id="header">
-				<div class="header">
-					<div class="row">
-						<div class="col-md-4 col-sm-5 col-xs-12">
-							<div class="logo">
-								<a href="{% url 'home' %}"><img src="{% static 'images/home/logo.png' %}" alt="" /></a>
-							</div>
-						</div>
-						<div class="col-md-8 col-sm-7 col-xs-12">
-							<div class="header-info pull-right">
-								<div class="header-info-search">
 
-									<form class="header-search" action="{% url 'search' %}">
-										<input type="text" class="header-input-search" placeholder="Search Here" name='search_word'/>
-										<a href="#" class="header-btn-search btn" ><span class="lnr lnr-magnifier"></span> Search</a>
-									</form>
-
-								</div>
-								<div class="header-info-login">
-									<a href="#" class="header-btn-signin"><span class="lnr lnr-user"></span> Sign In</a>
-									<a href="#" class="header-btn-join"><span class="lnr lnr-lock"></span> Join</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<nav class="main-nav ml-3 ">
-					<ul class="main-menu ">
-						<li><a href="{% url 'home' %}">Home</a></li>
-						<li><a href="{% url 'home' %}">blogs</a></li>
-						{% for cat in category %}
-							<li><a href="{% url 'blog_list' %}">{{cat.name}}</a></li>
-						{% endfor %}
-						<li><a href="{% url 'test' %}">test</a></li>
-					</ul>
-					<div class="mobile-menu">
-						<span class="mobile-menu-text">Menu</span>
-						<a href="#" class="btn-mobile-menu"><span class="lnr lnr-menu"></span></a>
-					</div>
-
-				</nav>
-				<!-- End Main Nav -->
-			</div>
-			<!-- End Header -->
-			<div id="content">
-				<div class="content-blog-dark">
+			<div id="content" class="">
+				<div class="mt-5 content-blog-dark">
 					{% for post in posts %}
 						<div class="item-post-list">
 							<div class="post-thumb">
-								<a href="#"><img alt="" src="{{post.picture.url}}"></a>
+								<a href="{% url 'single' post.id %}"><img alt="" src="{{post.picture.url}}"></a>
 							</div>
 							<div class="post-list-info">
 								<ul class="post-list-info-author list-inline">
 									<li>post by: {{post.author}}</li>
 									<li>{{post.created}}</li>
 								</ul>
+
+								<!-- <h2 class=" "><a href="#">{{post.title}} </a></h2> -->
+
 								<h2 class="title"><a href="#">{{post.title}} </a></h2>
 								<p class="desc">{{ post.desc|truncatechars:2000 }}</p>
 								<a class="btn-read-more" href="{% url 'single' post.id %}">Read More <span class="lnr lnr-chevron-right"></span></a>

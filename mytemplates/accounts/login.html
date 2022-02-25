@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Login{% endblock title %}
+
+{% block content %}
+
+<section class="section-conten padding-y col-12" style="min-height:84vh;">
+
+{% if request.GET.command == 'verification' %}
+
+    <div class="container text-center mx-auto alert alert-info" role="alert" style="max-width:500px; margin-top:100px;">
+      We have sent you a verification to your email address {{request.GET.email}}
+      <br><br>
+      <!-- Already verified? <a href="{% url 'accounts:login' %}">Login</a> -->
+    </div>
+  {% else %}
+
+  <div class="main d-flex justify-content-center w-100">
+    <main class="content d-flex p-0">
+      <div class="container d-flex flex-column">
+        <div class="row h-100">
+          <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+            <div class="d-table-cell align-middle">
+    
+              <div class="card">
+                <div class="card-body">
+                  <div class="m-sm-4">  
+                    {% include "include/alert.html" %}
+                    <form action="{% url 'accounts:login' %}" method="POST">
+                      <div class="mb-3">
+                        {% csrf_token %}
+                        <label class="form-label">Email</label>
+                        <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" />
+                        <small>
+                          <a href="{% url 'accounts:forgotpassword' %}" class="float-right">Forgot password?</a> 
+                        </small> 
+                      </div>
+                      <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
+                      </div>
+                      <p class="text-center mt-4">Don't have account? <a href="{% url 'accounts:register' %}">Sign up</a></p>
+                      <br><br>
+                    </form>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+
+
+<!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+
+
+</section>
+
+  {% endif %}
+
+{% endblock content %}
+
+

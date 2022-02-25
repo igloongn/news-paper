@@ -4,54 +4,7 @@
 
 {% block title %}Home{% endblock title %}
 {% block body %}
-	<div class="wrap">
-		<div class="container">
-			<div id="header">
-				<div class="header">
-					<div class="row">
-						<div class="col-md-4 col-sm-5 col-xs-12">
-							<div class="logo">
-								<a href="index-2.html"><img src="{% static 'images/home/logo.png' %}" alt="" /></a>
-							</div>
-						</div>
-						<div class="col-md-8 col-sm-7 col-xs-12">
-							<div class="header-info pull-right">
-								<div class="header-info-search">
 
-									<form class="header-search" action="{% url 'search' %}">
-										<!-- <input type="text" class="" placeholder="Search Here" name='search_word'/> -->
-										<div class="input-group">
-											<input type="search" class="form-control rounded" placeholder="Search Here" aria-label="Search" aria-describedby="search-addon"  name='search_word' style="width:60%;" />
-											<button type="submit" class="btn btn-dark"><span class="lnr lnr-magnifier"></span> Search</button>
-										</div>
-									</form>
-								</div>
-								
-								<div class="header-info-login">
-									<a href="#" class="header-btn-signin"><span class="lnr lnr-user"></span> Sign In</a>
-									<!-- <a href="#" class="header-btn-join"><span class="lnr lnr-lock"></span> Join</a> -->
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<nav class="main-nav ml-3 ">
-					<ul class="main-menu ">
-						<li><a href="{% url 'home' %}">Home</a></li>
-						<li><a href="{% url 'blog_list' %}">Blog List</a></li>
-						{% for cat in category %}
-							<li><a href="{% url 'blog_list' %}">{{cat.name}}</a></li>
-						{% endfor %}
-						<li><a href="{% url 'test' %}">test</a></li>
-					</ul>
-					<div class="mobile-menu">
-						<span class="mobile-menu-text">Menu</span>
-						<a href="#" class="btn-mobile-menu"><span class="lnr lnr-menu"></span></a>
-					</div>
-
-				</nav>
-				<!-- End Main Nav -->
-			</div>
 
 			<div id="content">
 				<div class="banner-slider home-paginav">
