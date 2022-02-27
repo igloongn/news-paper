@@ -7,6 +7,8 @@ from django.contrib import messages
 from .forms import RegistrationForm, UserForm, UserProfileForm
 from .models import Account, UserProfile
 
+from django.contrib.auth.models import User
+
 # Authentication
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -29,9 +31,6 @@ def test(request):
 
     return render(request, "list.html", p)
     
-    
-
-
 def register(request):
     p={}
     if request.method == 'POST':
@@ -49,6 +48,11 @@ def register(request):
             user.phone_number=phone_number
             user.set_password(password)
             user.save()
+            user_inbuilt = User.objects.create_user(first_name=first_name, last_name=last_name,email=email,username=username, password=password )
+            user_inbuilt.set_password(password)
+            user_inbuilt.save()
+
+
 
             # USER EMAIL ACTIVATION
             current_site = get_current_site(request)
@@ -65,8 +69,8 @@ def register(request):
             # EMAIL END
 
             # connect = UserProfile(connect=form.cleaned_data['email'],user=None,profile_picture=None,about_yourself=None) 
-            connect = UserProfile(connect=form.cleaned_data['email']) 
-            connect.save()
+            person = UserProfile(user=user, connect=form.cleaned_data['email']) 
+            person.save()
 
 
             # messages.success(request, 'Please Check your Email for confirmation')
@@ -79,40 +83,30 @@ def register(request):
 
     return render(request, 'accounts/register.html', p)
 
+
 def login_user(request):
-    print(request.user.is_authenticated)
+    print(f"Login:  {request.user.is_authenticated}")
     if request.user.is_authenticated:
-        print("User is logged in :!)")
-        return redirect('home')
+        print(f"Login: {request.user.is_authenticated}")
+        redirect("home")
     else:
-        print("User is not logged in :(")
-        if request.method == 'POST':
-            print("We are working on it :(")
-            email=request.POST['email']
-            password=request.POST['password']
-            user = auth.authenticate(email=email, password=password)
+        if request.method == "POST":
+            email = request.POST['email']
+            password = request.POST['password']
+            username=email.split('@')[0]
 
-            if user is not None:
+            # print(f"Username =  {username}")
+            print(f"Email =  {email}")
+            print(f"Password =  {password}")
+            user = auth.authenticate(username=username, password=password)
+            print(f"User::  {user}")
+            if user:
                 auth.login(request, user)
-                # print(user.username)
-                messages.success(request, 'You are now Logged in ')
-                url = request.META.get('HTTP_REFERER')
-                try:
-                    query=requests.utils.urlparse(url).query
-
-                    # next=cart/checkout
-                    params = dict(x.split('=') for x in query.split('&'))
-                    if 'next' in params:
-                        nextPage = params['next']
-                        return redirect(nextPage)
-                except:
-                    return redirect('home')
+                return redirect('home')
             else:
-                messages.error(request, 'Invalid Login!!')
                 return redirect('account:login')
-
-
     return render(request, 'accounts/login.html')
+
     
 @login_required(login_url = 'account:login')
 def logout(request):
@@ -199,36 +193,8 @@ def resetpassword(request):
             return redirect('accounts:resetpassword')
     else:
         return render(request, 'accounts/email/resetpassword.html')
-    
-# DASHBOARD
-# @login_required(login_url='accounts:login')
-# def dashboard(request):
-#     if UserProfile.objects.filter(user=request.user.id).exists():
-#         # orders = OrderProduct.objects.order_by('-created_at').filter(user=request.user, ordered=True)
-#         orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
-#         orders_count = orders.count()
-#         userprofile=UserProfile.objects.get(user_id=request.user.id)
-#     else:
-#         userprofile=None
-#         orders_count= 0
-
-#         orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
-
-#         orders_count = orders.count()
-#         userprofile=request.user.id
-#     params={
-#         'orders_count' : orders_count,
-#         'userprofile' : userprofile,
-#     }
-#     return render(request, 'dashboard.html', params)
 
 @login_required(login_url='accounts:login')
-def my_orders(request):
-    orders=Order.objects.order_by('-created_at').filter(user=request.user, is_ordered=True)
-    params={
-        'orders' : orders,    
-    }
-    return render(request, 'accounts/my_orders.html', params)
 
 @login_required(login_url='accounts:login')
 def edit_profile(request):
@@ -308,38 +274,7 @@ def change_password(request):
     }
     return render(request, 'accounts/change_password.html', params)
     
-    
-@login_required(login_url='accounts:login')
-def order_detail(request, order_no):
-    order_detail=OrderProduct.objects.filter(order__order_number=order_no, ordered=True)
-    order=Order.objects.get(order_number=order_no, is_ordered=True)
-    if order.is_ordered:
-        status='Paid'
-    
-    total=0
-    quantity=0
-    tax=0
-    grand_total=0 
-
-    
-    for cart_item in order_detail:
-        total += (cart_item.product.price * cart_item.quantity)
-        quantity += cart_item.quantity
-    tax = (8 * total)/100
-    grand_total = total + tax
-
-    params={
-        'order_detail':order_detail,
-        'order':order,
-        'status':status,
-            'total' : total,
-            'quantity' : quantity,
-            'tax' : tax,
-            'grand_total' : grand_total,
-    }
-    return render(request, 'accounts/order_detail.html', params)
-    
-    
+ 
 
 
 

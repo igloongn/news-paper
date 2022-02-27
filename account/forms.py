@@ -66,6 +66,7 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = Account
         fields = ('first_name', 'last_name', 'phone_number')
+        # fields = ('first_name', 'last_name')
     
         # THIS IS TO COMMUNICATE WITH ALL THE FIELDS
     def __init__(self, *args, **kwargs):

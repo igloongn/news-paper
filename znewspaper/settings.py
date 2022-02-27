@@ -59,9 +59,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-SESSION_EXPIRE_SECONDS = 25200  # 7 hour
-SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
-SESSION_TIMEOUT_REDIRECT = 'account:login'
+# SESSION_EXPIRE_SECONDS = 25200  # 7 hour
+# SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+# SESSION_TIMEOUT_REDIRECT = 'login'
 
 
 ROOT_URLCONF = 'znewspaper.urls'

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 # Create your models here.
+from django.contrib.auth.models import User
 
 class MyAccountManager(BaseUserManager):
     def create_user(self, first_name, last_name, username, email, password=None):
@@ -39,6 +40,7 @@ class MyAccountManager(BaseUserManager):
          
 
 class Account(AbstractBaseUser):
+    # user=models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     first_name = models.CharField(max_length = 150)
     last_name = models.CharField(max_length = 150)
     username = models.CharField(unique=True, max_length = 150)
@@ -59,7 +61,7 @@ class Account(AbstractBaseUser):
     objects = MyAccountManager()
 
     def __str__(self):
-        return self.email
+        return self.username
 
     # THIS IS FOR PERMISSION
     def has_perm(self, perm, obj=None):
@@ -73,7 +75,7 @@ class Account(AbstractBaseUser):
         
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(Account, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(Account, on_delete=models.CASCADE)
     connect = models.CharField(blank=True, max_length=100, null=True)
     # user = models.ForeignKey(Account, on_delete=models.CASCADE)
     address = models.CharField(blank=True, max_length=100, null=True)
@@ -83,7 +85,7 @@ class UserProfile(models.Model):
     about_yourself = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.connect
+        return self.user.username
     
         
     
