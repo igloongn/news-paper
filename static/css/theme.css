@@ -248,6 +248,7 @@ blockquote {
     background: #262626 none repeat scroll 0 0;
     position: relative;
     z-index: 999;
+    width: 100%;
 }
 .main-nav .main-menu > li > a {
     color: #fff;
@@ -256,13 +257,20 @@ blockquote {
     padding: 20px 15px;
     position: relative;
     text-transform: uppercase;
+    text-decoration: none;
 }
 .main-nav .main-menu {
-    display: inline-block;
+    /* display: inline-block;
     list-style: outside none none;
     margin: 0;
     padding: 0;
-	font-size:0;
+	font-size:0;*/
+    display: flex;
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    justify-content: center;
 }
 .main-nav li{
 	font-size:13px;

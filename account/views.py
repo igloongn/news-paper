@@ -85,8 +85,8 @@ def register(request):
 
 
 def login_user(request):
-    print(f"Login:  {request.user.is_authenticated}")
-    if request.user.is_authenticated:
+    print(f"Is Login:  {request.user.is_authenticated}")
+    if request.user.is_authenticated == True:
         print(f"Login: {request.user.is_authenticated}")
         redirect("home")
     else:
@@ -94,18 +94,18 @@ def login_user(request):
             email = request.POST['email']
             password = request.POST['password']
             username=email.split('@')[0]
-
-            # print(f"Username =  {username}")
-            print(f"Email =  {email}")
-            print(f"Password =  {password}")
+            # # print(f"Username =  {username}")
+            # print(f"Email =  {email}")
+            # print(f"Password =  {password}")
             user = auth.authenticate(username=username, password=password)
-            print(f"User::  {user}")
+            # print(f"User::  {user}")
             if user:
                 auth.login(request, user)
                 return redirect('home')
             else:
                 return redirect('account:login')
-    return render(request, 'accounts/login.html')
+    # return render(request, 'accounts/login.html')
+    return render(request, 'accounts/github_login.html')
 
     
 @login_required(login_url = 'account:login')
@@ -152,12 +152,13 @@ def forgotpassword(request):
             send_email.send()
 
             messages.success(request, 'Password reset email has been sent to your email address')
-            return redirect('accounts:login')
+            return redirect('account:login')
 
         else:
             messages.error(request, 'Account does not exist')
-            return redirect('accounts:forgotpassword')
-
+            return redirect('account:forgotpassword')
+    elif request.method == 'GET':
+        return render(request, 'accounts/forgotpassword.html')
 
     return render(request, 'accounts/forgotpassword.html')
     
@@ -170,10 +171,10 @@ def resetpassword_validate(request, uidb64, token):
     if user is not None and default_token_generator.check_token(user, token):
         request.session['uid'] = uid
         messages.success(request, 'Please reset your password')
-        return redirect('accounts:resetpassword')
+        return redirect('account:resetpassword')
     else:
         messages.error(request, 'This link  has been expired!')
-        return redirect('accounts:login')
+        return redirect('account:login')
     return render(request, 'accounts/email/reset_password_email.html')
 
 def resetpassword(request):
@@ -187,16 +188,16 @@ def resetpassword(request):
             user.set_password(password)
             user.save()
             messages.success(request, 'Password reset successful')
-            return redirect('accounts:login')
+            return redirect('account:login')
         else:
             messages.error(request, 'Password do not match')
-            return redirect('accounts:resetpassword')
+            return redirect('account:resetpassword')
     else:
         return render(request, 'accounts/email/resetpassword.html')
 
-@login_required(login_url='accounts:login')
+@login_required(login_url='account:login')
 
-@login_required(login_url='accounts:login')
+@login_required(login_url='account:login')
 def edit_profile(request):
     # if UserProfile.objects.filter(user=request.user.id).exists():
     connect = Account.objects.get(email=request.user)
@@ -244,7 +245,7 @@ def edit_profile(request):
     return render(request, 'accounts/edit_profile.html', params)
     
 
-@login_required(login_url='accounts:login')
+@login_required(login_url='account:login')
 def change_password(request):
     if request.method =='POST':
         current_password = request.POST['cpassword']

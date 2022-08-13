@@ -1,3 +1,5 @@
+import random
+from unicodedata import category
 from django.shortcuts import render
 
 # Create your views here.
@@ -20,7 +22,11 @@ def home(request):
     p['category']=category
     # This is for the post
     posts=Post.objects.order_by('created')
+    count=posts.count()
+    posts_random=random.choices(posts, k=count-1)
     p['posts']=posts
+    # p['posts']=posts
+    p['posts_random']=posts_random
 
     # API
     # url='http://api.mediastack.com/v1/news?access_key=b1ad7f8a441fccfd694b70aed02b872a&category=trending&languages=en'
@@ -36,19 +42,26 @@ def home(request):
 
 def blog_list(request, pk=None):
     p={}
-    posts=Post.objects.all()
+    posts=Post.objects.all().order_by('-updated')
     p['posts']=posts
     if posts.count() == 0:
         p['msg']="Sorry this list is empty"
-
+    else:
+        p['status']="This is for Josh"
+        
     # Search
     # search=Post.objects.filter(title__icontains = "user")
-
+    
     return render(request, 'blog.html', p)
 
 def search(request):
     # category
     category=Category.objects.raw("SELECT * FROM news_category")
+
+    # Useful
+    # category=Category.objects.raw("SELECT * FROM news_category order by id desc")
+    # category= Category.objects.all().order_by('-updated')
+    # print('category')
     
     if 'search_word' in request.GET:
         search_word = request.GET['search_word']

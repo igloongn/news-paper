@@ -14,7 +14,7 @@ urlpatterns = [
 
     # FOR EMAIL
     path('activate/<uidb64>/<token>/', v.activate, name='activate'),
-    path('forgotpassword', v.forgotpassword, name='forgotpassword'),
+    path('forgotpassword/', v.forgotpassword, name='forgotpassword'),
     path('resetpassword_validate/<uidb64>/<token>/', v.resetpassword_validate, name='resetpassword_validate'),
     path('resetpassword/', v.resetpassword , name='resetpassword'),
 
