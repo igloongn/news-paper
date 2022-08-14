@@ -23,5 +23,7 @@ urlpatterns = [
     path('edit_profile/', v.edit_profile ,name='edit_profile'),
     path('change_password/', v.change_password ,name='change_password'),
 
-
+    # Josh password reset urls
+    path('forgot-password/', v.josh_forgot_pass, name='josh_forgot_pass'),
+	path('reset-password/<uidb64>/<token>/', v.josh_reset_pass, name='josh_reset_pass'),
 ]

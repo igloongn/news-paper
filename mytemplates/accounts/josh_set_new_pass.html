@@ -1,0 +1,15 @@
+<h4 class="text-center mb-4">Set new password</h4>
+<form action="{% url 'josh_reset_pass' uidb64 token %}" method="POST">
+{% csrf_token %}
+    <div class="mb-3">
+        <label><strong>Email</strong></label>
+        <input type="password" class="form-control" placeholder="new password" name="password">
+    </div>
+    <div class="mb-3">
+        <label><strong>Email</strong></label>
+        <input type="password" class="form-control" placeholder="repeat password" name="password2">
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-block">SUBMIT</button>
+    </div>
+</form>
