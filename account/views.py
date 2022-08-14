@@ -21,6 +21,10 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage, message
 
+# professionals have standards
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.urls import reverse
+from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
 
 import requests
 
@@ -157,6 +161,7 @@ def forgotpassword(request):
         else:
             messages.error(request, 'Account does not exist')
             return redirect('account:forgotpassword')
+
     elif request.method == 'GET':
         return render(request, 'accounts/forgotpassword.html')
 
@@ -277,5 +282,64 @@ def change_password(request):
     
  
 
+# josh password reset views
+
+def josh_forgot_pass(request):
+	if request.method == "POST":
+		email = request.POST['email']
+		print(request.POST)
+		try:
+			user = User.objects.get(username=email)
+			print(user.first_name)
+			domain = get_current_site(request).domain
+			token = PasswordResetTokenGenerator().make_token(user)
+			uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+			link = reverse('reset_pass', kwargs={"uidb64": uidb64, 'token': token})
+			password_reset_url = "http://"+domain+link
+            # send an email containing the password_reset_url link
+			# send_password_reset_email(
+			# 	"Password reset requested", email, password_reset_url)
+			print("Email sent")
+			messages.success(
+				request, 'Password reset request sent successfully, check your email')
+		except Exception as e:
+			print("FAILED")
+			messages.success(
+				request, 'Password reset request Failed')
+	return render(request, 'accounts/josh_reset_password.html')
 
 
+def josh_reset_pass(request, uidb64, token):
+	context = {
+		'uidb64': uidb64,
+		'token': token,
+	}
+	try:
+		idd = force_text(urlsafe_base64_decode(uidb64))
+		user = User.objects.get(pk=idd)
+		if not PasswordResetTokenGenerator.check_token(user, token):
+			messages.info(request, "Link is no longer valid please request a new one")
+			return render(request, 'accounts/josh_reset_password.html')
+	except Exception as E:
+		pass
+
+	if request.method == "POST":
+		password = request.POST['password']
+		password2 = request.POST['password2']
+		if not password == password2:
+			messages.error(request, 'Passwords do not match!')
+			return render(request, 'set_new_pass.html', context)
+		if len(password) <= 3:
+			messages.error(request, "Password length must be at least 4")
+			return render(request, 'accounts/josh_set_new_pass.html', context)
+		try:
+			idd = force_text(urlsafe_base64_decode(uidb64))
+			user = User.objects.get(pk=idd)
+			user.set_password(password)
+			user.save()
+			messages.success(request, 'Password reset successful')
+			return redirect('login')
+		except Exception as E:
+			messages.info(request, "something went wrong")
+			print(E)
+	return render(request, 'accounts/josh_set_new_pass.html', context)
